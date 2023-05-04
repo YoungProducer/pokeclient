@@ -18,7 +18,12 @@ export interface PokemonInfoProps {
 }
 
 export const PokemonInfo: FunctionComponent<PokemonInfoProps> = ({ info }) => {
-  if (!info) return null;
+  if (!info)
+    return (
+      <div className={styles.container}>
+        <p className={styles.name}>Select pokemon to see its info</p>
+      </div>
+    );
 
   const { id, name, sprites, stats } = info;
 
