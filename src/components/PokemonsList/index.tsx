@@ -38,8 +38,6 @@ export const PokemonsList: FunctionComponent = () => {
     },
   );
 
-  console.log({ renderData });
-
   const filteredData = useMemo(() => renderData, [renderData]);
 
   return (
