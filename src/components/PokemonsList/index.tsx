@@ -1,4 +1,4 @@
-import { FunctionComponent, useMemo, useRef, useState } from 'react';
+import { FunctionComponent, useMemo, useState } from 'react';
 import {
   GetPokemonsData,
   PokemonResponse,
@@ -16,12 +16,18 @@ const fetchPokemonData = async (
   );
 };
 
-export const PokemonsList: FunctionComponent = () => {
-  const [offset, setOffset] = useState<number>(0);
+export interface PokemonsListProps {
+  offset: number;
+  limit: number;
+}
 
-  const limit = useRef(12).current;
-
+export const PokemonsList: FunctionComponent<PokemonsListProps> = ({
+  offset,
+  limit,
+}) => {
   const [renderData, setRenderData] = useState<PokemonResponse[]>([]);
+
+  const filteredData = useMemo(() => renderData, [renderData]);
 
   useGetPokemons(
     {
@@ -30,16 +36,20 @@ export const PokemonsList: FunctionComponent = () => {
     },
     {
       onSuccess({ results }) {
-        if (results.length === renderData.length) return;
+        // check if last entry of fetched pokemons already exists
+        if (
+          renderData.length > 0 &&
+          results.length > 0 &&
+          renderData.slice(-1)[0].name === results.slice(-1)[0].name
+        )
+          return;
 
-        fetchPokemonData(results.slice(-limit))
-          .then(setRenderData)
+        fetchPokemonData(results)
+          .then((data) => setRenderData((state) => state.concat(data)))
           .catch(console.error);
       },
     },
   );
-
-  const filteredData = useMemo(() => renderData, [renderData]);
 
   return (
     <div className={styles.container}>
