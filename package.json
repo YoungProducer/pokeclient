@@ -2,7 +2,7 @@
   "name": "pokeclient",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/YoungProducer/pokeclient",
+  "homepage": "https://youngproducer.github.io/pokeclient",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
