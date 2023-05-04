@@ -45,4 +45,5 @@
     flex: 1;
     position: sticky;
     top: 200px;
+    height: min-content;
 }
