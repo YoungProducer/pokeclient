@@ -7,6 +7,7 @@ import {
 } from '../../api';
 import { Card } from '../Card';
 import styles from './styles.module.css';
+import { uniqueArray } from '../../utils/uniqueArray';
 
 const fetchPokemonData = async (
   data: GetPokemonsData[],
@@ -19,19 +20,31 @@ const fetchPokemonData = async (
 export interface PokemonsListProps {
   offset: number;
   limit: number;
+  selectedFilters: string[];
   selectPokemon: (info: PokemonResponse) => void;
   setCanLoadMore: (value: false) => void;
+  addFilterOptions: (options: string[]) => void;
 }
 
 export const PokemonsList: FunctionComponent<PokemonsListProps> = ({
   offset,
   limit,
+  selectedFilters,
   selectPokemon,
   setCanLoadMore,
+  addFilterOptions,
 }) => {
   const [renderData, setRenderData] = useState<PokemonResponse[]>([]);
 
-  const filteredData = useMemo(() => renderData, [renderData]);
+  const filteredData = useMemo(() => {
+    if (selectedFilters.length === 0) return renderData;
+
+    return renderData.filter((element) =>
+      element.types.some((type) => selectedFilters.includes(type.type.name)),
+    );
+  }, [renderData, selectedFilters]);
+
+  console.log({ selectedFilters, filteredData });
 
   useGetPokemons(
     {
@@ -51,7 +64,15 @@ export const PokemonsList: FunctionComponent<PokemonsListProps> = ({
           return;
 
         fetchPokemonData(results)
-          .then((data) => setRenderData((state) => state.concat(data)))
+          .then((data) => {
+            setRenderData((state) => state.concat(data));
+
+            const newFilterOptions = uniqueArray(
+              data.flatMap((el) => el.types.map((type) => type.type.name)),
+            );
+
+            addFilterOptions(newFilterOptions);
+          })
           .catch(console.error);
       },
     },
