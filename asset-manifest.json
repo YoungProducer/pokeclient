@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/YoungProducer/pokeclient/static/css/main.e8ae781b.css",
+    "main.js": "/YoungProducer/pokeclient/static/js/main.c8055a25.js",
+    "static/js/787.76d65a20.chunk.js": "/YoungProducer/pokeclient/static/js/787.76d65a20.chunk.js",
+    "index.html": "/YoungProducer/pokeclient/index.html",
+    "main.e8ae781b.css.map": "/YoungProducer/pokeclient/static/css/main.e8ae781b.css.map",
+    "main.c8055a25.js.map": "/YoungProducer/pokeclient/static/js/main.c8055a25.js.map",
+    "787.76d65a20.chunk.js.map": "/YoungProducer/pokeclient/static/js/787.76d65a20.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e8ae781b.css",
+    "static/js/main.c8055a25.js"
+  ]
+}
