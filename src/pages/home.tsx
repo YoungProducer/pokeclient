@@ -20,6 +20,8 @@ export const HomePage: FunctionComponent = () => {
 
   const [selectedFilter, setSelectedFilters] = useState<string[]>([]);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const clearInfo = () => setPokemonInfo(null);
 
   const loadMore = () => canLoadMore && setOffset((s) => s + limit);
@@ -44,13 +46,14 @@ export const HomePage: FunctionComponent = () => {
             setCanLoadMore={setCanLoadMore}
             addFilterOptions={addFilterOptions}
             selectedFilters={selectedFilter}
+            setIsLoading={setIsLoading}
           />
           <button
             className={styles.button}
             onClick={loadMore}
-            disabled={!canLoadMore}
+            disabled={!canLoadMore || isLoading}
           >
-            Load More
+            {isLoading ? 'Loading...' : 'Load More'}
           </button>
         </div>
         <div className={styles.info}>

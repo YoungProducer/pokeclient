@@ -24,6 +24,7 @@ export interface PokemonsListProps {
   selectPokemon: (info: PokemonResponse) => void;
   setCanLoadMore: (value: false) => void;
   addFilterOptions: (options: string[]) => void;
+  setIsLoading: (loading: boolean) => void;
 }
 
 export const PokemonsList: FunctionComponent<PokemonsListProps> = ({
@@ -33,6 +34,7 @@ export const PokemonsList: FunctionComponent<PokemonsListProps> = ({
   selectPokemon,
   setCanLoadMore,
   addFilterOptions,
+  setIsLoading,
 }) => {
   const [renderData, setRenderData] = useState<PokemonResponse[]>([]);
 
@@ -44,8 +46,19 @@ export const PokemonsList: FunctionComponent<PokemonsListProps> = ({
     );
   }, [renderData, selectedFilters]);
 
-  console.log({ selectedFilters, filteredData });
-
+  // that might a little overhead, but when I realized, it was to late,
+  // didn't want to spend more time to rewrite all the stuff
+  //
+  // the reason why I've implemented all the logic in `onSuccess`
+  // is beacause I don't really like `useEffect`
+  // and trying to avoid it as much as possible
+  // so all my code works on callback and easier like to debug and understand the logic(I hope so)
+  //
+  // I didn't use all the power of react-query, but let's say that for "future"
+  // honestly, we could use `useQuery` inside of each card and we would get allmost same result
+  // but for my subjective opinion it was better to do as i did
+  // plus, we get a little piece of optimization
+  // because it fetches the pokemon's data only for recently loaded pokemons
   useGetPokemons(
     {
       offset,
@@ -63,6 +76,8 @@ export const PokemonsList: FunctionComponent<PokemonsListProps> = ({
         )
           return;
 
+        setIsLoading(true);
+
         fetchPokemonData(results)
           .then((data) => {
             setRenderData((state) => state.concat(data));
@@ -73,7 +88,8 @@ export const PokemonsList: FunctionComponent<PokemonsListProps> = ({
 
             addFilterOptions(newFilterOptions);
           })
-          .catch(console.error);
+          .catch(console.error)
+          .finally(() => setIsLoading(false));
       },
     },
   );
