@@ -6,6 +6,7 @@ import {
   useGetPokemons,
 } from '../../api';
 import { Card } from '../Card';
+import styles from './styles.module.css';
 
 const fetchPokemonData = async (
   data: GetPokemonsData[],
@@ -41,7 +42,7 @@ export const PokemonsList: FunctionComponent = () => {
   const filteredData = useMemo(() => renderData, [renderData]);
 
   return (
-    <div>
+    <div className={styles.container}>
       {filteredData.map((el) => (
         <Card key={el.name} {...el} />
       ))}
