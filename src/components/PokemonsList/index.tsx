@@ -1,4 +1,4 @@
-import { FunctionComponent, useMemo, useState } from 'react';
+import { FunctionComponent, useCallback, useMemo, useState } from 'react';
 import {
   GetPokemonsData,
   PokemonResponse,
@@ -19,11 +19,13 @@ const fetchPokemonData = async (
 export interface PokemonsListProps {
   offset: number;
   limit: number;
+  selectPokemon: (info: PokemonResponse) => void;
 }
 
 export const PokemonsList: FunctionComponent<PokemonsListProps> = ({
   offset,
   limit,
+  selectPokemon,
 }) => {
   const [renderData, setRenderData] = useState<PokemonResponse[]>([]);
 
@@ -51,10 +53,15 @@ export const PokemonsList: FunctionComponent<PokemonsListProps> = ({
     },
   );
 
+  const onSelect = useCallback(
+    (info: PokemonResponse) => () => selectPokemon(info),
+    [selectPokemon],
+  );
+
   return (
     <div className={styles.container}>
       {filteredData.map((el) => (
-        <Card key={el.name} {...el} />
+        <Card key={el.name} {...el} onClick={onSelect(el)} />
       ))}
     </div>
   );
