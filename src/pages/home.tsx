@@ -10,9 +10,11 @@ export const HomePage: FunctionComponent = () => {
   const [offset, setOffset] = useState<number>(0);
   const limit = useRef(12).current;
 
+  const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
+
   const [pokemonInfo, setPokemonInfo] = useState<PokemonResponse | null>(null);
 
-  const loadMore = () => setOffset((s) => s + limit);
+  const loadMore = () => canLoadMore && setOffset((s) => s + limit);
 
   return (
     <div className={styles.container}>
@@ -25,8 +27,13 @@ export const HomePage: FunctionComponent = () => {
             offset={offset}
             limit={limit}
             selectPokemon={setPokemonInfo}
+            setCanLoadMore={setCanLoadMore}
           />
-          <button className={styles.button} onClick={loadMore}>
+          <button
+            className={styles.button}
+            onClick={loadMore}
+            disabled={!canLoadMore}
+          >
             Load More
           </button>
         </div>

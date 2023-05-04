@@ -14,6 +14,7 @@ export interface GetPokemonsData {
 
 export interface GetPokemonsResponse {
   results: GetPokemonsData[];
+  next: string | null;
 }
 
 const GetPokemonsPath = (

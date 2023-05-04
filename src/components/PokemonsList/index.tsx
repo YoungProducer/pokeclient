@@ -20,12 +20,14 @@ export interface PokemonsListProps {
   offset: number;
   limit: number;
   selectPokemon: (info: PokemonResponse) => void;
+  setCanLoadMore: (value: false) => void;
 }
 
 export const PokemonsList: FunctionComponent<PokemonsListProps> = ({
   offset,
   limit,
   selectPokemon,
+  setCanLoadMore,
 }) => {
   const [renderData, setRenderData] = useState<PokemonResponse[]>([]);
 
@@ -37,7 +39,9 @@ export const PokemonsList: FunctionComponent<PokemonsListProps> = ({
       limit,
     },
     {
-      onSuccess({ results }) {
+      onSuccess({ results, next }) {
+        if (!next) setCanLoadMore(false);
+
         // check if last entry of fetched pokemons already exists
         if (
           renderData.length > 0 &&
