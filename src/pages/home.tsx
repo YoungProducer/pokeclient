@@ -20,6 +20,8 @@ export const HomePage: FunctionComponent = () => {
 
   const [selectedFilter, setSelectedFilters] = useState<string[]>([]);
 
+  const clearInfo = () => setPokemonInfo(null);
+
   const loadMore = () => canLoadMore && setOffset((s) => s + limit);
 
   const addFilterOptions = (options: string[]) =>
@@ -32,7 +34,9 @@ export const HomePage: FunctionComponent = () => {
       </header>
       <div className={styles.content}>
         <div className={styles.list}>
-          <Filter options={filterOptions} onUpdate={setSelectedFilters} />
+          <div className={styles.filter}>
+            <Filter options={filterOptions} onUpdate={setSelectedFilters} />
+          </div>
           <PokemonsList
             offset={offset}
             limit={limit}
@@ -50,7 +54,7 @@ export const HomePage: FunctionComponent = () => {
           </button>
         </div>
         <div className={styles.info}>
-          <PokemonInfo info={pokemonInfo} />
+          <PokemonInfo info={pokemonInfo} onClear={clearInfo} />
         </div>
       </div>
     </div>

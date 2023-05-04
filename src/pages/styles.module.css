@@ -50,3 +50,41 @@
     top: 200px;
     height: min-content;
 }
+
+@media screen and (max-width: 1280px) {
+    .container {
+        padding: 0 20px;
+        position: relative;
+    }
+
+    .header {
+        position: sticky;
+        top: 1px;
+        background-color: #fff;
+        z-index: 1;
+    }
+
+    .content {
+        flex-direction: column-reverse;
+    }
+
+    .info {
+        top: 94px;
+        box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .filter {
+        position: fixed;
+        background-color: #fff;
+        transform: translateY(-30px);
+        /* 40px is page padding */
+        width: minmax(min-content, fit-content);
+        left: 20px;
+        right: 20px;
+        padding: 20px;
+        z-index: 1;
+        box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.2);
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+}

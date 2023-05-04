@@ -15,9 +15,13 @@ const getPrettifiedId = (id: number) => {
 
 export interface PokemonInfoProps {
   info: PokemonResponse | null;
+  onClear: () => void;
 }
 
-export const PokemonInfo: FunctionComponent<PokemonInfoProps> = ({ info }) => {
+export const PokemonInfo: FunctionComponent<PokemonInfoProps> = ({
+  info,
+  onClear,
+}) => {
   if (!info)
     return (
       <div className={styles.container}>
@@ -31,10 +35,15 @@ export const PokemonInfo: FunctionComponent<PokemonInfoProps> = ({ info }) => {
 
   return (
     <div className={styles.container}>
-      <img className={styles.image} src={imgPath} />
-      <p className={styles.name}>
-        {toTitle(name)} {getPrettifiedId(id)}
-      </p>
+      <div className={styles.general}>
+        <img className={styles.image} src={imgPath} />
+        <p className={styles.name}>
+          {toTitle(name)} {getPrettifiedId(id)}
+        </p>
+        <button className={styles.clear} onClick={onClear}>
+          Clear
+        </button>
+      </div>
       <Stats stats={stats} />
     </div>
   );
