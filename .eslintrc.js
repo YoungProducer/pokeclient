@@ -12,7 +12,8 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
+    'plugin:react/jsx-runtime'
   ],
   ignorePatterns: ['.eslintrc.js'],
   overrides: [],
