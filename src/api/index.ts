@@ -63,6 +63,7 @@ export interface PokemonType {
 }
 
 export interface PokemonResponse {
+  id: number;
   name: string;
   sprites: PokemonSprites;
   stats: PokemonStat[];
