@@ -12,6 +12,9 @@ export const HomePage: FunctionComponent = () => {
 
   return (
     <div className={styles.container}>
+      <header className={styles.header}>
+        <h1>Pokedex</h1>
+      </header>
       <div>
         <PokemonsList offset={offset} limit={limit} />
         <button className={styles.button} onClick={loadMore}>
